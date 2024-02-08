@@ -1,6 +1,6 @@
 const User = require('../models/User');
 const jwt = require('jsonwebtoken');
-const bcrypt = require('bcryptjs');
+const { encryptPassword, comparePassword } = require('../utils/passwordUtils');
 
 exports.signup = async (req, res) => {
   try {
@@ -11,10 +11,12 @@ exports.signup = async (req, res) => {
       return res.status(400).json({ message: 'User already exists' });
     }
 
-    const user = new User({ username, email, password });
+    // Encrypt the password before saving
+    const hashedPassword = await encryptPassword(password);
+    const user = new User({ username, email, password: hashedPassword });
     await user.save();
 
-    // Generate token
+    // Generate a token
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
     res.status(201).json({ message: 'User registered successfully', token });
   } catch (error) {
@@ -30,7 +32,8 @@ exports.login = async (req, res) => {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    const isMatch = await user.comparePassword(password);
+    // Use the comparePassword utility function
+    const isMatch = await comparePassword(password, user.password);
     if (!isMatch) {
       return res.status(401).json({ message: 'Incorrect password' });
     }
