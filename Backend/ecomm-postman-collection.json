@@ -1,0 +1,125 @@
+{
+    "info": {
+      "_postman_id": "unique_id",
+      "name": "MERN Stack E-commerce App",
+      "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+      {
+        "name": "Signup",
+        "request": {
+          "method": "POST",
+          "header": [],
+          "body": {
+            "mode": "raw",
+            "raw": "{\n    \"username\": \"sampleUser\",\n    \"email\": \"user@example.com\",\n    \"password\": \"samplePassword\"\n}",
+            "options": {
+              "raw": {
+                "language": "json"
+              }
+            }
+          },
+          "url": {
+            "raw": "{{baseUrl}}/auth/signup",
+            "host": ["{{baseUrl}}"],
+            "path": ["auth", "signup"]
+          }
+        }
+      },
+      {
+        "name": "Login",
+        "request": {
+          "method": "POST",
+          "header": [],
+          "body": {
+            "mode": "raw",
+            "raw": "{\n    \"email\": \"user@example.com\",\n    \"password\": \"samplePassword\"\n}",
+            "options": {
+              "raw": {
+                "language": "json"
+              }
+            }
+          },
+          "url": {
+            "raw": "{{baseUrl}}/auth/login",
+            "host": ["{{baseUrl}}"],
+            "path": ["auth", "login"]
+          }
+        }
+      },
+      {
+        "name": "Add Product",
+        "request": {
+          "method": "POST",
+          "header": [
+            {
+              "key": "Authorization",
+              "value": "Bearer {{token}}",
+              "type": "text"
+            }
+          ],
+          "body": {
+            "mode": "raw",
+            "raw": "{\n    \"name\": \"Product Name\",\n    \"total_qnty\": 100,\n    \"category\": \"Sample Category\",\n    \"price\": 9.99\n}",
+            "options": {
+              "raw": {
+                "language": "json"
+              }
+            }
+          },
+          "url": {
+            "raw": "{{baseUrl}}/products/new",
+            "host": ["{{baseUrl}}"],
+            "path": ["products", "new"]
+          }
+        }
+      },
+      {
+        "name": "Get Products",
+        "request": {
+          "method": "GET",
+          "header": [],
+          "url": {
+            "raw": "{{baseUrl}}/products/products",
+            "host": ["{{baseUrl}}"],
+            "path": ["products", "products"]
+          }
+        }
+      },
+      {
+        "name": "Get Product by ID",
+        "request": {
+          "method": "GET",
+          "header": [],
+          "url": {
+            "raw": "{{baseUrl}}/products/by-id/:id",
+            "host": ["{{baseUrl}}"],
+            "path": ["products", "by-id", ":id"]
+          }
+        }
+      },
+      {
+        "name": "Get Products by Category",
+        "request": {
+          "method": "GET",
+          "header": [],
+          "url": {
+            "raw": "{{baseUrl}}/products/by-category/:category",
+            "host": ["{{baseUrl}}"],
+            "path": ["products", "by-category", ":category"]
+          }
+        }
+      }
+    ],
+    "variable": [
+      {
+        "key": "baseUrl",
+        "value": "http://localhost:3000"
+      },
+      {
+        "key": "token",
+        "value": ""
+      }
+    ]
+  }
+  
